@@ -7,6 +7,7 @@ const winner = document.getElementById("winner")
 const playerHand = []
 const dealerHand = []
 let i = 0
+let once = 0
 
 fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6")
 .then(shuffleResponse => shuffleResponse.json())
@@ -25,13 +26,19 @@ fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6")
         })
 
         // Listens for a click on the play button and deals a card
-        play.addEventListener("click", () => {
-            playerHand.push(deal(playerDisplay))
-            dealerHand.push(deal(dealerDisplay, true))
-            playerHand.push(deal(playerDisplay))
-            dealerHand.push(deal(dealerDisplay))
+        play.addEventListener("click", function play(){
+            if(once == 0){
+                playerHand.push(deal(playerDisplay))
+                dealerHand.push(deal(dealerDisplay, true))
+                playerHand.push(deal(playerDisplay))
+                dealerHand.push(deal(dealerDisplay))
+                once++
+            }
             count(playerHand)
-            document.addEventListener("keypress", event => {
+            document.addEventListener("keyup", event => {
+                event.stopPropagation()
+                event.preventDefault()
+                console.log("key pressed")
                 if(event.key == " "){
                     playerHand.push(deal(playerDisplay))
                     console.log(count(playerHand))
@@ -76,6 +83,7 @@ fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6")
                 cardDisplay.src = hand.image
             }
             cardDisplay.id = i
+            cardDisplay.className = "card"
             i++
             display.append(cardDisplay)
             return hand
@@ -123,7 +131,7 @@ fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6")
             while(count(dealerHand) < 17){
                 dealerHand.push(deal(dealerDisplay))
                 if(count(dealerHand) > 21){
-                    const aceIndex = dealerHand.indexOf(element => element.value == "ACE" && typeof element.lower == "undefined") 
+                    const aceIndex = dealerHand.findIndex(element => element.value == "ACE" && typeof element.lower == "undefined") 
                     if(aceIndex != -1){
                         dealerHand[aceIndex].lower = true
                         count(dealerHand)
@@ -159,7 +167,9 @@ fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6")
                 cheats.textContent = ""
             })
             // Listens for mouse clicks on the text in the cheat div
-            document.getElementById("cheat-box").addEventListener("click", () => {
+            document.getElementById("cheat-box").addEventListener("click", event => {
+                event.stopPropagation()
+                event.preventDefault()
                 let neededValue = 21 - count(playerHand)
                 console.log(neededValue)
                 let cheatIndex
@@ -188,4 +198,5 @@ fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6")
             })
         })
     })
+    
 })
