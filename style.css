@@ -1,10 +1,11 @@
 body {
     background-image: url(9999520.jpg);
-    color: white;
+    color: black;
 }
 #dealer, #player {
     border: 2px solid black;
     border-radius: 15px;
+    background-color: rgba(245, 245, 245, 0.194);
     padding-left: 10px;
     padding-bottom: 20px;
 }
@@ -14,7 +15,8 @@ body {
     border: 2px solid black;
     border-radius: 15px;
     vertical-align: bottom;
-    text-align: center;;
+    text-align: center;
+    background-color: rgba(245, 245, 245, 0.194);
 }
 .card {
     max-width: 200px;

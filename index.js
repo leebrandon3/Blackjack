@@ -161,7 +161,7 @@ fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6")
         // Listens for mouse enters on the div "cheat"
         document.getElementById("cheats").addEventListener("mouseenter", () => {
             const cheats = document.getElementById("cheat-box")
-            cheats.textContent = "Hello there"
+            cheats.textContent = "Psst click me"
             // Listens for mouse leaves on the div "cheat"
             document.getElementById("cheats").addEventListener("mouseleave", () => {
                 cheats.textContent = ""
@@ -198,5 +198,4 @@ fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6")
             })
         })
     })
-    
 })
